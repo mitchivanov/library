@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero">
+    <h1 class="display-4">Добро пожаловать на крутой сайт!</h1>
+    <p class="lead">Йоу, крутой сайт где представлена самая лучшая библиотека</p>
+    <a href="{% url 'library' %}" class="btn btn-success btn-lg">Перейти в библиотеку</a>
+</div>
+
+<div>
+<h2>Что здесь?</h2>
+<p>Привет! Тут очень много крутой литературы, которую ты вряд-ли быстро найдёшь</p>
+<p>Давай там удачи почитать</p>
+</div>
+
+<a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
+<a href="{% url 'login' %}" class="btn btn-secondary">Вход</a>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Библиотека</h1>
+
+<!-- Форма фильтрации -->
+<form method="get">
+    <select name="genre">
+        <option value="">Все жанры</option>
+        {% for genre in genres %}
+            <option value="{{ genre.id }}" {% if request.GET.genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                {{ genre.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <select name="section">
+        <option value="">Все разделы</option>
+        {% for section in sections %}
+            <option value="{{ section.id }}" {% if request.GET.section == section.id|stringformat:"s" %}selected{% endif %}>
+                {{ section.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <select name="author">
+        <option value="">Все авторы</option>
+        {% for author in authors %}
+            <option value="{{ author.id }}" {% if request.GET.author == author.id|stringformat:"s" %}selected{% endif %}>
+                {{ author }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <input type="number" name="year" placeholder="Год" value="{{ request.GET.year }}">
+
+    <button type="submit">Фильтровать</button>
+</form>
+
+<!-- Отображение книг -->
+<div class="book-list">
+    {% for file in files %}
+        <div class="book-item">
+            <img src="{{ file.cover.url }}" alt="{{ file.title }}" width="150" height="200">
+            <h3>{{ file.title }}</h3>
+            <p>Автор: {{ file.author }}</p>
+            <p>Год: {{ file.year }}</p>
+            <p>Жанры: 
+                {% for genre in file.genre.all %}
+                    {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p>Раздел: {{ file.section.name }}</p>
+            <p>Описание: {{ file.description }}</p>
+            <p>Загружено: {{ file.uploaded_at|date:"d.m.Y H:i" }}</p>
+            <a href="{% url 'download_cheatsheet' file.id %}">Скачать</a>
+        </div>
+    {% empty %}
+        <p>Нет доступных книг.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="registration">
+    <div class="container">
+        <h2 class="registration_title_register text-center my-4">Регистрация</h2>
+        <form method="post" class="register-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <div class="form-group">
+                {{ form.password_confirm.label_tag }}
+                {{ form.password_confirm }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg mt-3">Зарегистрироваться</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
