@@ -1,7 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section class="profile">
+<div class="container">
 <h2>Личный кабинет</h2>
 <p>Добро пожаловать, {{ user.username }}!</p>
 <p>Это ваш личный кабинет. Здесь может быть размещена персональная информация.</p>
+</div>
+
+<div class="info">
+    <div class="avatar">
+        <img src="{{ user.avatar.url }}" alt="Аватар">
+        <img src="../static/images/blank-avatar-photo-place-holder-600nw-1114445501.jpg">
+    </div>
+    <div class="info-text">
+        <p>Имя: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Номер телефона: {{ user.phone_number }}</p>
+        <p>Адрес: {{ user.user_address }}</p>
+    </div>
+</div>
+
+</section>
 {% endblock %}

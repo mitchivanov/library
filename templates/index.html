@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section class="main-section">
 <div class="hero">
     <h1 class="display-4">Добро пожаловать на крутой сайт!</h1>
     <p class="lead">Йоу, крутой сайт где представлена самая лучшая библиотека</p>
@@ -12,7 +13,23 @@
 <p>Привет! Тут очень много крутой литературы, которую ты вряд-ли быстро найдёшь</p>
 <p>Давай там удачи почитать</p>
 </div>
+</section>
 
-<a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
-<a href="{% url 'login' %}" class="btn btn-secondary">Вход</a>
+<section class="recommended-books">
+    <h2>Рекомендованные книги</h2>
+    <div class="card-deck">
+        {% for book in recommended_books %}
+        <div class="card">
+            <img src="{{ book.cover.url }}" class="card-img-top" alt="{{ book.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text">Автор: {{ book.author }}</p>
+                <p class="card-text">Год: {{ book.year }}</p>
+                <a href="{% url 'download_cheatsheet' book.id %}" class="btn btn-primary">Скачать</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
 {% endblock %}

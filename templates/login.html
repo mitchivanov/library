@@ -2,9 +2,13 @@
 
 {% block content %}
 <h2>Вход</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Войти</button>
-</form>
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt"></i> Войти
+        </button>
+    </form>
+</div>
 {% endblock %}

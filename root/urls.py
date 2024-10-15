@@ -10,10 +10,11 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
-    path('logout/', LogoutView.as_view(next_page='index'), name='logout'),
+    path('logout/',views.logout_view, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('library/', views.library, name='library'),
     path('download/<int:cheatsheet_id>/', views.download_cheatsheet, name='download_cheatsheet'),
+    path('chat/', views.chat, name='chat'),
 ]
 
 if settings.DEBUG:

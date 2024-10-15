@@ -8,7 +8,11 @@ import os
 from django.utils.encoding import smart_str
 
 def index(request):
-    return render(request, 'index.html')
+    recommended_books = Cheatsheet.objects.order_by('?')[:3]  # Выбираем 3 случайные книги
+    context = {
+        'recommended_books': recommended_books
+    }
+    return render(request, 'index.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -75,6 +79,13 @@ def download_cheatsheet(request, cheatsheet_id):
         return response
     raise Http404
 
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'profile.html', {'user': request.user})
+
+def chat(request):
+    return render(request, 'chat.html')

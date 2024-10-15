@@ -1,9 +1,43 @@
+body {
+    /* Устанавливаем фоновое изображение для всей страницы */
+    background-image: url('../images/fon-walpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.hero{
+    text-align: center;
+    margin: 2rem;
+}
+
+.main-section{
+    /* background-image: url('../images/fon-walpaper.jpg'); */
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+
+}
+
+.button-register{
+    margin: 1rem;
+}
+
+.button-login{
+    margin: 1rem;
+}
+
 .registration {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80vh;
-    background-color: #fffefe;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
 }
 
 .register-form {
@@ -26,4 +60,53 @@
 .btn-primary {
     background-color: #4c74bd;
     border: none;
+}
+
+.main-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.avatar{
+    border-radius: 1rem;
+    border: 1px solid black;
+}
+
+.avatar img{
+    width: 30%;
+    border-radius: 1rem;
+    height: auto;
+}
+
+.library p, h5{
+    color: black;
+}
+
+.card-deck {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.card {
+    width: 18rem;
+    margin: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-radius: 8px 8px 0 0;
+    height: 200px;
+    object-fit: cover;
 }
