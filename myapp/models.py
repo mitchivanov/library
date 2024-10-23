@@ -54,3 +54,13 @@ class Cheatsheet(models.Model):
 
     def __str__(self):
         return self.title
+
+class UserPreference(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='preference')
+    favorite_genres = models.ManyToManyField(Genre, related_name='user_preferences')
+    favorite_sections = models.ManyToManyField(Section, related_name='user_preferences')
+    favorite_authors = models.ManyToManyField(Author, related_name='user_preferences')
+    preferred_year = models.PositiveIntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Preferences of {self.user.username}"

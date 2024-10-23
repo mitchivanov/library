@@ -1,24 +1,37 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse, Http404
-from .forms import UserCreateForm, UserAuthenticationForm
-from .models import Cheatsheet, Genre, Section, Author
+from .forms import UserCreateForm, UserAuthenticationForm, UserPreferenceForm
+from .models import Cheatsheet, Genre, Section, Author, UserPreference
 import os
 from django.utils.encoding import smart_str
 
+
 def index(request):
     return render(request, 'index.html')
-
-def register(request):
-    if request.method == 'POST':
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
+ 
+def register(request): 
+    if request.method == 'POST': 
+        form = UserCreateForm(request.POST) 
+        if form.is_valid(): 
+            password = form.cleaned_data.get('password')
+            password_confirm = form.cleaned_data.get('password_confirm')
+            if password == password_confirm:
+                form.save() 
+                messages.success(request, 'Аккаунт успешно создан!') 
+                return redirect('login')
+            else:
+                messages.error(request, 'Пароли не совпадают')
+        else:
+            messages.error(request, 'Проверьте введённые данные')
     else:
-        form = UserCreateForm()
-    return render(request, 'register.html', {'form': form})
+        form = UserCreateForm() 
+    context = { 
+        'form': form 
+    } 
+    return render(request, 'register.html', context) 
 
 def user_login(request):
     if request.method == 'POST':
@@ -77,4 +90,22 @@ def download_cheatsheet(request, cheatsheet_id):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    user_preference, _ = UserPreference.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        preference_form = UserPreferenceForm(request.POST, instance=user_preference)
+        if preference_form.is_valid():
+            preference_form.save()
+            messages.success(request, 'Предпочтения успешно сохранены!')
+            return redirect('profile')
+    else:
+        preference_form = UserPreferenceForm(instance=user_preference)
+    
+    context = {
+        'preference_form': preference_form
+    }
+    return render(request, 'profile.html', context)
+
+def user_logout(request):
+    auth_logout(request)
+    messages.success(request, 'Вы успешно вышли из системы')
+    return redirect('index')

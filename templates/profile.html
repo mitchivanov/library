@@ -1,7 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Личный кабинет</h2>
-<p>Добро пожаловать, {{ user.username }}!</p>
-<p>Это ваш личный кабинет. Здесь может быть размещена персональная информация.</p>
+<div class="container mt-5 pt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h2 class="mb-3">{{ user.username }}</h2>
+                    <p class="text-muted">{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <h3 class="mb-0">Ваши предпочтения</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in preference_form %}
+                            <div class="form-group">
+                                <label class="font-weight-bold">{{ field.label }}</label>
+                                {% if field.name == 'preferred_year' %}
+                                    {{ field }}
+                                {% else %}
+                                    <div class="checkbox-group">
+                                        {{ field }}
+                                    </div>
+                                {% endif %}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

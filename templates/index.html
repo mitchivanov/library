@@ -1,18 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="hero">
-    <h1 class="display-4">Добро пожаловать на крутой сайт!</h1>
-    <p class="lead">Йоу, крутой сайт где представлена самая лучшая библиотека</p>
-    <a href="{% url 'library' %}" class="btn btn-success btn-lg">Перейти в библиотеку</a>
-</div>
+<section class="hero">
+    <div class="container">
+        <h1>Библиотека нового поколения</h1>
+        <p>Откройте для себя мир знаний</p>
+        <a href="{% url 'library' %}" class="btn btn-primary btn-lg">Начать читать</a>
+    </div>
+</section>
 
-<div>
-<h2>Что здесь?</h2>
-<p>Привет! Тут очень много крутой литературы, которую ты вряд-ли быстро найдёшь</p>
-<p>Давай там удачи почитать</p>
-</div>
-
-<a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
-<a href="{% url 'login' %}" class="btn btn-secondary">Вход</a>
+<section class="features py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                <h3>Огромная коллекция</h3>
+                <p class="text-muted">Тысячи книг в вашем распоряжении</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <h3>Умные рекомендации</h3>
+                <p class="text-muted">Подборки на основе ваших интересов</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <h3>Удобный доступ</h3>
+                <p class="text-muted">Читайте где угодно и когда угодно</p>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
