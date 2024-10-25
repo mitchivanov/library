@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h1 class="display-4 mb-4">Библиотека</h1>
+    
+    <div class="library-filters">
+        <form method="get" class="row">
+            <div class="col-md-3">
+                <select name="genre" class="form-control">
+                    <option value="">Все жанры</option>
+                    {% for genre in genres %}
+                        <option value="{{ genre.id }}" {% if request.GET.genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                            {{ genre.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="section" class="form-control">
+                    <option value="">Все разделы</option>
+                    {% for section in sections %}
+                        <option value="{{ section.id }}" {% if request.GET.section == section.id|stringformat:"s" %}selected{% endif %}>
+                            {{ section.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="author" class="form-control">
+                    <option value="">Все авторы</option>
+                    {% for author in authors %}
+                        <option value="{{ author.id }}" {% if request.GET.author == author.id|stringformat:"s" %}selected{% endif %}>
+                            {{ author }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="year" class="form-control" placeholder="Год" value="{{ request.GET.year }}">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary w-100">Найти</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        {% for file in files %}
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <img src="{{ file.cover.url }}" class="card-img-top" alt="{{ file.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ file.title }}</h5>
+                        <p class="card-text text-muted">{{ file.author }}</p>
+                        <p class="card-text">{{ file.description|truncatewords:30 }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center pb-3">
+                        <a href="{% url 'download_cheatsheet' file.id %}" class="btn btn-primary">Скачать</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p class="lead text-muted">Книги не найдены</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
