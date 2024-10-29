@@ -48,7 +48,7 @@ main {
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background: linear-gradient(158deg, rgba(2,0,36,1), rgba(122,177,119,1), rgba(0,212,255,1));
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 }
@@ -139,14 +139,25 @@ main {
 .library-filters {
     background: var(--card-background);
     padding: 20px;
+
     border-radius: 18px;
     margin-bottom: 30px;
 }
 
-.library-filters select, 
-.library-filters input {
+.library-filters .row {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+
+
+.library-filters select,
+.library-filters input,
+.library-filters button {
     width: 100%;
-    margin-bottom: 15px;
+    height: 100%;
+    margin: 0;
 }
 
 .checkbox-group {
@@ -176,6 +187,7 @@ main {
 .checkbox-group input[type="checkbox"] {
     margin-right: 8px;
 }
+
 
 .book-card {
     height: 100%;
@@ -213,4 +225,22 @@ main {
     .checkbox-group {
         grid-template-columns: 1fr;
     }
+}
+
+.book-reader {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.book-reader embed {
+    border: none;
+    border-radius: 4px;
+}
+
+.book-header {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
 }

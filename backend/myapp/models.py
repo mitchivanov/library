@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Genre(models.Model):
     name = models.CharField(max_length=100, default="Неизвестный жанр")
@@ -16,30 +17,30 @@ class Section(models.Model):
 class Author(models.Model):
     first_name = models.CharField(max_length=100, default="Имя")
     last_name = models.CharField(max_length=100, default="Фамилия")
-    # Дополнительные поля при необходимости
-
+    photo = models.ImageField(upload_to='authors/', blank=True, null=True)
+    biography = models.TextField(blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
+    
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    def get_absolute_url(self):
+        return reverse('author_detail', args=[str(self.id)])
+
 class Cheatsheet(models.Model):
     title = models.CharField(max_length=200, default="Без названия")
-    author = models.ForeignKey(
-        Author,
-        on_delete=models.CASCADE,
-        related_name='cheatsheets',
-        default=1  # Временный дефолтный автор с id=1
-    )
+    authors = models.ManyToManyField(Author, related_name='cheatsheets')
     genre = models.ManyToManyField(Genre, related_name='cheatsheets')
     section = models.ForeignKey(
         Section,
         on_delete=models.CASCADE,
         related_name='cheatsheets',
-        default=1  # Временный дефолтный раздел с id=1
+        default=1
     )
     year = models.PositiveIntegerField(default=2000)
     file = models.FileField(
         upload_to='cheatsheets/',
-        default='cheatsheets/default.pdf',  # Временный дефолтный файл
+        default='cheatsheets/default.pdf',
         blank=True,
         null=True
     )
@@ -48,9 +49,9 @@ class Cheatsheet(models.Model):
         default='covers/default.png',
         blank=True,
         null=True
-    )  # Поле для обложки
-    description = models.TextField(blank=True, null=True)  # Поле для описания
-    uploaded_at = models.DateTimeField(auto_now_add=True)  # Поле для даты загрузки
+    )
+    description = models.TextField(blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

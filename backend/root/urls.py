@@ -15,6 +15,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('library/', views.library, name='library'),
     path('download/<int:cheatsheet_id>/', views.download_cheatsheet, name='download_cheatsheet'),
+    path('author/<int:author_id>/', views.author_detail, name='author_detail'),
+    path('read/<int:cheatsheet_id>/', views.read_book, name='read_book'),
 ]
 
 if settings.DEBUG:

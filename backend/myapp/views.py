@@ -64,7 +64,7 @@ def library(request):
     if section_id:
         files = files.filter(section__id=section_id)
     if author_id:
-        files = files.filter(author__id=author_id)
+        files = files.filter(authors__id=author_id)  # Изменено с author на authors
     if year:
         files = files.filter(year=year)
 
@@ -109,3 +109,29 @@ def user_logout(request):
     auth_logout(request)
     messages.success(request, 'Вы успешно вышли из системы')
     return redirect('index')
+
+def author_detail(request, author_id):
+    author = get_object_or_404(Author, pk=author_id)
+    books = author.cheatsheets.all()
+    
+    context = {
+        'author': author,
+        'books': books
+    }
+    return render(request, 'author.html', context)
+
+def read_book(request, cheatsheet_id):
+    book = get_object_or_404(Cheatsheet, pk=cheatsheet_id)
+    file_extension = book.file.name.split('.')[-1].lower()
+    
+    if file_extension == 'pdf':
+        response = FileResponse(book.file, content_type='application/pdf')
+        response['Content-Disposition'] = f'inline; filename="{book.file.name}"'
+        response['X-Frame-Options'] = 'SAMEORIGIN'
+        return response
+    
+    context = {
+        'book': book,
+        'file_extension': file_extension,
+    }
+    return render(request, 'read_book.html', context)

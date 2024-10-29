@@ -15,8 +15,12 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Cheatsheet)
 class CheatsheetAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'year', 'section', 'uploaded_at')
-    list_filter = ('genre', 'year', 'author', 'section')
-    search_fields = ('title', 'author__first_name', 'author__last_name', 'description')
-    filter_horizontal = ('genre',)
-    readonly_fields = ('uploaded_at',)  # Сделать поле даты загрузки только для чтения
+    list_display = ('title', 'get_authors', 'year', 'section', 'uploaded_at')
+    list_filter = ('genre', 'year', 'authors', 'section')
+    search_fields = ('title', 'authors__first_name', 'authors__last_name', 'description')
+    filter_horizontal = ('genre', 'authors')
+    readonly_fields = ('uploaded_at',)
+
+    def get_authors(self, obj):
+        return ", ".join([str(author) for author in obj.authors.all()])
+    get_authors.short_description = 'Авторы'

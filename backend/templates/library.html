@@ -7,7 +7,7 @@
     
     <div class="library-filters">
         <form method="get" class="row">
-            <div class="col-md-3">
+            <div class="col">
                 <select name="genre" class="form-control">
                     <option value="">Все жанры</option>
                     {% for genre in genres %}
@@ -17,7 +17,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col">
                 <select name="section" class="form-control">
                     <option value="">Все разделы</option>
                     {% for section in sections %}
@@ -27,7 +27,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col">
                 <select name="author" class="form-control">
                     <option value="">Все авторы</option>
                     {% for author in authors %}
@@ -37,10 +37,10 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-md-2">
-                <input type="number" name="year" class="form-control" placeholder="Год" value="{{ request.GET.year }}">
+            <div class="col-2">
+                <input type="number" name="year" class="form-control" placeholder="Год">
             </div>
-            <div class="col-md-1">
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary w-100">Найти</button>
             </div>
         </form>
@@ -53,11 +53,16 @@
                     <img src="{{ file.cover.url }}" class="card-img-top" alt="{{ file.title }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ file.title }}</h5>
-                        <p class="card-text text-muted">{{ file.author }}</p>
+                        <p class="card-text text-muted">
+                            {% for author in file.authors.all %}
+                                <a href="{% url 'author_detail' author.id %}">{{ author }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
                         <p class="card-text">{{ file.description|truncatewords:30 }}</p>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        <a href="{% url 'download_cheatsheet' file.id %}" class="btn btn-primary">Скачать</a>
+                        <a href="{% url 'read_book' file.id %}" class="btn btn-primary mr-2">Читать</a>
+                        <a href="{% url 'download_cheatsheet' file.id %}" class="btn btn-outline-primary">Скачать</a>
                     </div>
                 </div>
             </div>
